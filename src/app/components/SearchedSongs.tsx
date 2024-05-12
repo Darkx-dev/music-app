@@ -2,7 +2,6 @@ import React from 'react'
 import Song from './Song'
 
 export default function SearchedSongs({searchQuery, data}: any) {
-    const {albums, artists, playlists, songs, topQuery} = data.results
     const results = data.results
     const testing = () => {
         console.log(data.results)
