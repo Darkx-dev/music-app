@@ -1,13 +1,52 @@
+"use client";
 import Navbar from "./components/Navbar";
-export default function Home() {
+import Navigator from "./components/Navigator";
+import Recent from "./components/Recent";
+import Song from "./components/Song";
+import SearchedSongs from "./components/SearchedSongs";
+import { getSong } from "@/utils/Search";
+import { useState } from "react";
+
+export default function Page() {
+  const [inputValue, setInputValue] = useState(null);
+  const [data, setData]: any = useState([null]);
+
+  // Debounce function
+  const debounce = (func: Function, delay: number) => {
+    let timeoutId: any;
+    return (...args: any) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+
+  // Handle input change
+  const handleSongSearch = debounce(async (value: any) => {
+    if (!value) return setInputValue(null);
+    let query = value.split(" ").join("+");
+    setInputValue(value);
+    try {
+      const data = await getSong(query);
+      setData(data?.data);
+    } catch (error) {}
+  }, 1000);
+
   return (
-    <main className="min-h-screen bg-[#0A091E] p-4">
+    <main className="min-h-screen text-white px-5 pt-5">
       <Navbar />
-      <div className="flex mt-5">
-        <h1 className="text-white text-2xl leading-tight text-nowrap font-semibold">
-          Listen The <br /> Latest Musics
+      <div className="flex items-center gap-8 mt-5">
+        <h1 className="text-[26px] leading-tight text-nowrap">
+          {!inputValue && (
+            <span>
+              Listen The <br />
+              Latest Music
+            </span>
+          )}
+          {inputValue && <span>Search Results</span>}
         </h1>
-        <div className="search__wrapper flex items-center pl-8">
+        <div className="search__wrapper flex flex-nowrap items-center ">
           <div className="search__icon">
             <svg
               width="18"
@@ -34,14 +73,37 @@ export default function Home() {
           </div>
           <input
             type="text"
-            className="search__input w-full bg-transparent text-sm outline-none rounded-full :border-2 px-3 py-1 text-white border-[#ffffff74]"
+            id="search"
+            name="searchQuery"
+            onChange={(e) => handleSongSearch(e.target.value)}
+            className="search__input w-full placeholder:text-[#8E8E8E] bg-transparent outline-none pl-3 py-1 rounded-full text-sm"
             placeholder="Search Music"
-          />
+          ></input>
         </div>
       </div>
-      <div className="recently__played">
-        <h1 className="text-xl text-white font-normal">Recently Played</h1>
-      </div>
+      {!inputValue && (
+        <div className="recents__wrapper mt-10">
+          <h2 className="recents__title text-[22px]">Recently Played</h2>
+          <div className="recents__ mt-4 flex flex-nowrap justify-between overflow-y-hidden overflow-x-scroll">
+            <Recent />
+            <Recent />
+            <Recent />
+          </div>
+        </div>
+      )}
+      {!inputValue && (
+        <div className="recommended mt-5">
+          <h2 className="recommended-heading text-[18px]">Recommend for you</h2>
+          <div className="recommended__songs grid grid-flow-row gap-3 mt-3">
+            <Song />
+            <Song />
+            <Song />
+          </div>
+        </div>
+      )}
+
+      {!inputValue && <Navigator />}
+      {inputValue && <SearchedSongs searchQuery={inputValue} data={data} />}
     </main>
   );
 }
