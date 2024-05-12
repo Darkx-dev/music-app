@@ -6,6 +6,8 @@ import Song from "./components/Song";
 import SearchedSongs from "./components/SearchedSongs";
 import { getSong } from "@/utils/Search";
 import { useState } from "react";
+import { motion } from "framer-motion";
+import Player from "./components/Player";
 
 export default function Page() {
   const [inputValue, setInputValue] = useState(null);
@@ -104,6 +106,7 @@ export default function Page() {
 
       {!inputValue && <Navigator />}
       {inputValue && <SearchedSongs searchQuery={inputValue} data={data} />}
+      
     </main>
   );
 }

@@ -8,7 +8,7 @@ import Link from "next/link";
 import { formatTime, formatPercentage } from "@/utils/TimeFormatter";
 import Navigator from "@/app/components/Navigator";
 
-export default function Song({ params }: any) {
+export default function Player({ id, settoggle }: any) {
   const audio: any = useRef(null);
   const intervalRef: any = useRef(null);
   const progressBar: any = useRef(null);
@@ -16,7 +16,7 @@ export default function Song({ params }: any) {
   const [currentTime, setCurrentTime]: any = useState("0:00");
   const [isPaused, setIsPaused] = useState(true);
   const [song, setSong]: any = useState(null);
-  let songId = params.id;
+  let songId = id;
   const getSongData = async (id: string) => {
     let currentSong = await getSongById(id);
     setSong(currentSong);
@@ -61,7 +61,13 @@ export default function Song({ params }: any) {
   return (
     <main className="min-h-screen text-white pb-0 px-4 pt-4" id="song__page">
       <nav className="song__nav flex justify-between items-center flex-nowrap">
-        <Link href="/">
+        <Link
+          href="/"
+          onClick={() => {
+            stopInterval();
+            settoggle(false);
+          }}
+        >
           <div className="back">
             <div className="back__icon">
               <svg
@@ -119,9 +125,7 @@ export default function Song({ params }: any) {
         <img
           src={song?.image[2].url}
           alt="song cover"
-          height={300}
-          width={300}
-          className="h-full w-full rounded-3xl"
+          className="h-[300px] w-full rounded-3xl"
         />
       </div>
       <div className="song__info text-center mt-2">
@@ -137,9 +141,9 @@ export default function Song({ params }: any) {
           controls
           ref={audio}
         ></audio>
-        <div className="song__bar relative bg-white h-[4px] w-full rounded-full">
+        <div className="song__bar relative bg-white h-[4px] w-full rounded-full overflow-hidden">
           <div
-            className={`song__bar__fill bg-[#6156E2] h-full w-min transition-transform rounded-full`}
+            className={`song__bar__fill bg-[#6156E2] h-full w-min transition-transform`}
             ref={progressBar}
           ></div>
           <span className="absolute top-1 left-0">{currentTime}</span>
@@ -219,28 +223,48 @@ export default function Song({ params }: any) {
             className="play__pause bg-[#6156E2] p-3 rounded-full"
             onClick={handlePlayPause}
           >
-            <svg
-              width="43"
-              height="41"
-              viewBox="0 0 43 41"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M17.9872 6.83331H10.9862V34.1666H17.9872V6.83331Z"
-                stroke="#F2F2F2"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M31.9892 6.83331H24.9882V34.1666H31.9892V6.83331Z"
-                stroke="#F2F2F2"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            {isPaused && (
+              <svg
+                width="43"
+                height="41"
+                viewBox="0 0 20 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5.98773 4L16.2331 12L5.98773 20V4Z"
+                  stroke="#F2F2F2"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            )}
+
+            {!isPaused && (
+              <svg
+                width="43"
+                height="41"
+                viewBox="0 0 43 41"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M17.9872 6.83331H10.9862V34.1666H17.9872V6.83331Z"
+                  stroke="#F2F2F2"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M31.9892 6.83331H24.9882V34.1666H31.9892V6.83331Z"
+                  stroke="#F2F2F2"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            )}
           </button>
           <button className="next" onClick={handleNextSong}>
             <svg
@@ -306,7 +330,9 @@ export default function Song({ params }: any) {
           </button>
         </div>
       </div>
+      <div className="navigator__wrapper fixed bottom-0 w-full left-0 px-4">
       <Navigator />
+      </div>
     </main>
   );
 }
