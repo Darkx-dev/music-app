@@ -8,7 +8,7 @@ export default function Navigator() {
     <div className="navigator z-50 pt-5">
       <ul
         className="navigator__routes grid grid-cols-4 place-items-center py-6 px-3 rounded-[40px] rounded-b-none"
-        style={{ boxShadow: "0 -5px 25px -5px #ffffff25" }}
+        style={{ boxShadow: "0 -20px 25px -15px #ffffff25" }}
       >
         <div className="home__route">
           <div className="__home__icon">
