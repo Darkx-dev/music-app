@@ -97,7 +97,7 @@ export default function Player({ id, settoggle }: any) {
         </Link>
         <div className="current__song">
           <div className="song__title__artist">
-            <h1>{song.name} by {song.artists.primary[0].name.split(' ')[0]}</h1>
+            <h1>{song?.name} by {song?.artists.primary[0].name.split(' ')[0]}</h1>
           </div>
         </div>
         <div className="like__current">
