@@ -13,7 +13,7 @@ export default function SearchedSongs({ searchQuery, data }: any) {
   const testing = () => {
     console.log(data);
   };
-  const togglePlayer = (id: string, e: MouseEvent) => {
+  const togglePlayer = (id: string, e: any) => {
     setSongId(id)
     setToggle(!toggle);
     console.log(e.target)
