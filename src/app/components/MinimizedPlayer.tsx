@@ -3,6 +3,9 @@
 import { useRef, useState, useEffect } from "react";
 import { formatTime, formatPercentage } from "@/utils/TimeFormatter";
 import { getSongById } from "@/utils/Songs";
+import { motion } from "framer-motion";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function MinimizedPlayer({ id }: any) {
   const audio: any = useRef(null);
@@ -58,24 +61,54 @@ export default function MinimizedPlayer({ id }: any) {
     intervalRef.current = null;
     handleNextSong();
   };
-  const handlePreviousSong = () => {};
-  const handleNextSong = () => {};
+  const devToast = () => {
+    toast.info("🦄 Wow so easy!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+  const handlePreviousSong = () => {
+    devToast()
+  };
+  const handleNextSong = () => {
+    devToast()
+  };
   useEffect(() => {
     getSongData(songId);
     console.log(1);
   }, [songId]);
   return (
     <div className="mini__player w-full flex flex-nowrap items-center gap-2 py-2 rounded-md">
+      <div className="toasts__wrapper">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+      </div>
       <div className="song__cover">
         <img
           src={song?.image[1]?.url}
           alt="song cover"
-          className=" w-[80px] rounded-lg object-cover object-center"
+          className=" w-[100px] rounded-lg object-cover object-center"
         />
       </div>
       <div className="player__main w-full">
         <div className="progress__wrapper">
-          <div className="progress__bar w-full bg-[#ffffff] rounded-full overflow-hidden h-[4px]">
+          <div className="progress__bar w-full bg-[#D9D9D9] rounded-full overflow-hidden h-[4px]">
             <audio
               hidden
               src={song?.downloadUrl[3]?.url}
@@ -83,7 +116,7 @@ export default function MinimizedPlayer({ id }: any) {
               ref={audio}
             ></audio>
             <div
-              className={`progress__bar__fill bg-[#6156E2] h-full w-min transition-transform`}
+              className={`progress__bar__fill bg-[#E69A15] h-full w-min transition-transform`}
               ref={progressBar}
             ></div>
           </div>
@@ -94,72 +127,73 @@ export default function MinimizedPlayer({ id }: any) {
         </div>
         <div className="player__controls flex flex-nowrap justify-evenly gap-4">
           <div
-            className="bg-white p-2 rounded-full back"
+            className="rounded-full back flex items-center"
             onClick={handlePreviousSong}
           >
             <div className="back__icon rotate-180">
               <svg
-                width="15px"
-                height="15px"
-                viewBox="0 0 24 24"
+                width="25"
+                height="25"
+                viewBox="0 0 25 25"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M5.60439 4.23093C4.94586 3.73136 4 4.20105 4 5.02762V18.9724C4 19.799 4.94586 20.2686 5.60439 19.7691L14.7952 12.7967C15.3227 12.3965 15.3227 11.6035 14.7952 11.2033L5.60439 4.23093ZM2 5.02762C2 2.54789 4.83758 1.13883 6.81316 2.63755L16.004 9.60993C17.5865 10.8104 17.5865 13.1896 16.004 14.3901L6.81316 21.3625C4.83758 22.8612 2 21.4521 2 18.9724V5.02762Z"
-                  fill="#0F0F0F"
+                  d="M3.91666 7.52084V17.4896C3.91666 19.5313 6.13541 20.8125 7.90625 19.7917L12.2292 17.3021L16.5521 14.8021C18.3229 13.7813 18.3229 11.2292 16.5521 10.2083L12.2292 7.70834L7.90625 5.21875C6.13541 4.19792 3.91666 5.46875 3.91666 7.52084Z"
+                  fill="white"
                 />
                 <path
-                  d="M20 3C20 2.44772 20.4477 2 21 2C21.5523 2 22 2.44772 22 3V21C22 21.5523 21.5523 22 21 22C20.4477 22 20 21.5523 20 21V3Z"
-                  fill="#0F0F0F"
+                  d="M21.0833 19.7188C20.6562 19.7188 20.3021 19.3646 20.3021 18.9375V6.0625C20.3021 5.63542 20.6562 5.28125 21.0833 5.28125C21.5104 5.28125 21.8646 5.63542 21.8646 6.0625V18.9375C21.8646 19.3646 21.5208 19.7188 21.0833 19.7188Z"
+                  fill="white"
                 />
               </svg>
             </div>
           </div>
           <div
-            className="bg-[#6156E2] p-2 rounded-full pause__play flex justify-center items-center"
+            className=" rounded-full pause__play flex justify-center items-center"
             onClick={handlePlayPause}
           >
             <div className="pause__play__icon grid w-fit">
               <svg
-                width="15px"
-                height="15px"
-                viewBox="0 0 24 24"
+                width="30"
+                height="30"
+                viewBox="0 0 50 50"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path
-                  d="M16.6582 9.28638C18.098 10.1862 18.8178 10.6361 19.0647 11.2122C19.2803 11.7152 19.2803 12.2847 19.0647 12.7878C18.8178 13.3638 18.098 13.8137 16.6582 14.7136L9.896 18.94C8.29805 19.9387 7.49907 20.4381 6.83973 20.385C6.26501 20.3388 5.73818 20.0469 5.3944 19.584C5 19.053 5 18.1108 5 16.2264V7.77357C5 5.88919 5 4.94701 5.3944 4.41598C5.73818 3.9531 6.26501 3.66111 6.83973 3.6149C7.49907 3.5619 8.29805 4.06126 9.896 5.05998L16.6582 9.28638Z"
-                  stroke="#ffffff"
-                  strokeWidth="2.5"
-                  strokeLinejoin="round"
-                />
+                <g clip-path="url(#clip0_1_719)">
+                  <path
+                    d="M25 50C11.1937 50 0 38.8063 0 25C0 11.1937 11.1937 0 25 0C38.8063 0 50 11.1937 50 25C50 38.8063 38.8063 50 25 50ZM18.75 12.5188V37.4813L37.5 25L18.75 12.5188Z"
+                    fill="white"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_1_719">
+                    <rect width="50" height="50" fill="white" />
+                  </clipPath>
+                </defs>
               </svg>
             </div>
           </div>
           <div
-            className="bg-white p-2 rounded-full next"
+            className="p-2 rounded-full next flex items-center"
             onClick={handleNextSong}
           >
-            <div className="next__icon">
+            <div className="next__icon ">
               <svg
-                width="15px"
-                height="15px"
-                viewBox="0 0 24 24"
+                width="25"
+                height="25"
+                viewBox="0 0 25 25"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M5.60439 4.23093C4.94586 3.73136 4 4.20105 4 5.02762V18.9724C4 19.799 4.94586 20.2686 5.60439 19.7691L14.7952 12.7967C15.3227 12.3965 15.3227 11.6035 14.7952 11.2033L5.60439 4.23093ZM2 5.02762C2 2.54789 4.83758 1.13883 6.81316 2.63755L16.004 9.60993C17.5865 10.8104 17.5865 13.1896 16.004 14.3901L6.81316 21.3625C4.83758 22.8612 2 21.4521 2 18.9724V5.02762Z"
-                  fill="#0F0F0F"
+                  d="M3.91666 7.52084V17.4896C3.91666 19.5313 6.13541 20.8125 7.90625 19.7917L12.2292 17.3021L16.5521 14.8021C18.3229 13.7813 18.3229 11.2292 16.5521 10.2083L12.2292 7.70834L7.90625 5.21875C6.13541 4.19792 3.91666 5.46875 3.91666 7.52084Z"
+                  fill="white"
                 />
                 <path
-                  d="M20 3C20 2.44772 20.4477 2 21 2C21.5523 2 22 2.44772 22 3V21C22 21.5523 21.5523 22 21 22C20.4477 22 20 21.5523 20 21V3Z"
-                  fill="#0F0F0F"
+                  d="M21.0833 19.7188C20.6562 19.7188 20.3021 19.3646 20.3021 18.9375V6.0625C20.3021 5.63542 20.6562 5.28125 21.0833 5.28125C21.5104 5.28125 21.8646 5.63542 21.8646 6.0625V18.9375C21.8646 19.3646 21.5208 19.7188 21.0833 19.7188Z"
+                  fill="white"
                 />
               </svg>
             </div>

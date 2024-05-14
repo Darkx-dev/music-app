@@ -2,8 +2,11 @@
 import Image from "next/image";
 import { useState } from "react";
 import darkBgImage from "@/assets/images/bg.png";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Signup() {
   const router = useRouter();
@@ -13,10 +16,25 @@ export default function Signup() {
     email: "",
   });
   const handleSubmit = async () => {
+    if (user.username == "" || user.password == "") {
+      return toast("Can't be blank", {
+        type: "error",
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
     try {
-      const response = await axios.post("/api/register", user);
-      const data = await response.data;
-      console.log(data);
+      const response = await toast.promise(axios.post("/api/register", user), {
+        pending: "Regestering...",
+        success: "Registered Successfully",
+        error: "Wrong username or password",
+      });
       router.push("/");
     } catch (err) {
       console.log(err);
@@ -24,6 +42,19 @@ export default function Signup() {
   };
   return (
     <main className="bg-[rgb(42,39,39)] text-white relative z-0 h-screen">
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        limit={4}
+      />
       <Image
         src={darkBgImage}
         className="absolute z-10 h-full w-full object-auto object-top"
@@ -96,6 +127,12 @@ export default function Signup() {
             >
               Continue with Email
             </a> */}
+             <Link
+              href={"/login"}
+              className="bg-[#00000050] text-yellow-400 tracking-wider rounded-[18px] px-5 py-2 cursor-pointer text-sm font-normal"
+            >
+              Log in?
+            </Link>
           </div>
           <p className="terms text-center w-[72%] text-sm text-[#CBC8C8] mt-5">
             by continuing you agree to terms of services and Privacy policy

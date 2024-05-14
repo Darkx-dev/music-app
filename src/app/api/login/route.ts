@@ -4,6 +4,7 @@ import User from "@/models/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+console.log("POST LOGIN")
 connect();
 
 export const POST = async (req: NextRequest) => {
@@ -13,7 +14,7 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json(
       { message: "Invalid Credentials" },
       {
-        status: 401,
+        status: 401
       }
     );
   }

@@ -7,13 +7,13 @@ import { getSong } from "@/utils/Search";
 import { useState, useEffect } from "react";
 import MinimizedPlayer from "./components/MinimizedPlayer";
 import axios from "axios";
-
+import { motion } from "framer-motion";
 
 export default function Page() {
   const [user, setUser] = useState({
     username: "",
     email: "",
-  })
+  });
   const [inputValue, setInputValue] = useState(null);
   const [data, setData]: any = useState([null]);
   const [toggle, setToggle] = useState(false);
@@ -47,37 +47,47 @@ export default function Page() {
     setToggle(true);
   };
 
-  const minimizePlayer = () => {
-  };
+  const minimizePlayer = () => {};
 
-  const getUserData =async () => {
-    const response = await axios.get('/api/getuser');
-    const data = await response.data
-    console.log(data)
-    setUser({username: data.username, email: data.email})
-  }
+  const getUserData = async () => {
+    const response = await axios.get("/api/getuser");
+    const data = await response.data;
+    console.log(data);
+    setUser({ username: data.username, email: data.email });
+  };
 
   useEffect(() => {
     let recents = localStorage.getItem("bessMusicRecents")?.split("#") || [];
     setBessMusicRecents([...recents]);
-    getUserData()
+    getUserData();
   }, []);
 
   return (
-    <main className="h-screen text-white pt-5 flex flex-col justify-center">
-      <header>
-        <Navbar user={user}/>
-        <div className=" flex items-center gap-8 mt-5 px-5 w-full self-start">
-          <h1 className="text-[26px] leading-tight text-nowrap">
+    <motion.main
+      initial={{ filter: "blur(50px)" }}
+      animate={{ filter: "blur(0px)" }}
+      className={`h-screen text-white flex flex-col justify-center`}
+      id="main"
+    >
+      <motion.header
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="navbar__wrapper h-fit w-full backdrop-blur">
+          <Navbar user={user} />
+        </div>
+        <div className=" flex items-center justify-between gap-8 mt-5 pl-5 w-full self-start">
+          <h1 className="text-[26px] text-[#FF2E00] font-semibold leading-tight text-nowrap">
             {!inputValue && (
-              <span>
+              <span className="">
                 Listen The <br />
                 Latest Music
               </span>
             )}
-            {inputValue && <span>Search Results</span>}
+            {inputValue && <span>Results</span>}
           </h1>
-          <div className="search__wrapper flex flex-nowrap items-center ">
+          <div className="search__wrapper flex flex-nowrap items-center rounded-l-full -z-10 backdrop-blur-sm bg-[#ffffff20] pl-2 py-1">
             <div className="search__icon">
               <svg
                 width="18"
@@ -112,21 +122,32 @@ export default function Page() {
             ></input>
           </div>
         </div>
-      </header>
-      <section className={`px-5 h-full overflow-auto scroll-hide`} id="home">
+      </motion.header>
+      <motion.section
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className={`px-5 h-full overflow-auto scroll-hide`}
+        id="home"
+      >
         {!inputValue && (
           <div className="recents__wrapper mt-10">
             <h2 className="recents__title text-[22px]">Recently Played</h2>
-            <div className="recents__ mt-4 flex justify-between flex-nowrap overflow-y-hidden overflow-x-auto scroll-hide snap-x gap-3 snap-mandatory">
-              {bessMusicRecents.map((recent: any) => (
-                <Recent key={recent} id={recent} togglePlayer={togglePlayer} />
+            <div className="recents__ mt-4 flex h-fit justify-between flex-nowrap overflow-y-hidden overflow-x-auto scroll-hide snap-x gap-3 snap-mandatory">
+              {bessMusicRecents.map((recent: any, index: number) => (
+                <Recent
+                  key={recent}
+                  id={recent}
+                  index={index}
+                  togglePlayer={togglePlayer}
+                />
               ))}
             </div>
           </div>
         )}
         {!inputValue && (
           <div className="recommended mt-5">
-            <h2 className="recommended-heading text-[18px]">
+            <h2 className="recommended-heading text-[18px] ">
               Recommend for you
             </h2>
             <div className="recommended__songs grid grid-flow-row gap-3 mt-3"></div>
@@ -143,20 +164,25 @@ export default function Page() {
             toggle={toggle}
           />
         )}
-      </section>
-      <div className="navigator__player__wrapper w-full  justify-self-end self-end order-2">
+      </motion.section>
+      <div className="navigator__player__wrapper w-full bg-[#FF2E0020] rounded-t-lg justify-self-end self-end order-2">
         {toggle && (
-          <div className="player__wrapper px-2 py-2">
+          <motion.div
+            initial={{ y: 50 }}
+            animate={{ y: 0 }}
+            className="player__wrapper px-2 py-2"
+          >
             <MinimizedPlayer id={songId} />
-          </div>
+          </motion.div>
         )}
-        <div
-          className="navigator__wrapper z-50 w-full pt-5 pb-3 rounded-xl shadow "
-          style={{ boxShadow: "0 -2px 25px -15px #ffffff80" }}
+        <motion.div
+          initial={{ y: 10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="navigator__wrapper z-50 w-full pt-5 pb-3 rounded-t-lg shadow bg-[#131313] "
         >
-          <Navigator />
-        </div>
+          <Navigator activeNav="home" songId={songId} />
+        </motion.div>
       </div>
-    </main>
+    </motion.main>
   );
 }

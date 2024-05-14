@@ -3,6 +3,10 @@ import Image from "next/image";
 import { useState } from "react";
 import darkBgImage from "@/assets/images/bg.png";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
+
 import { useRouter } from "next/navigation";
 
 export default function Login() {
@@ -12,10 +16,25 @@ export default function Login() {
     password: "",
   });
   const handleSubmit = async () => {
+    if (user.username == "" || user.password == "") {
+      return toast("Can't be blank", {
+        type: "error",
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
     try {
-      const response = await axios.post("/api/login", user);
-      const data = await response.data;
-      console.log(data);
+      const response = await toast.promise(axios.post("/api/login", user), {
+        pending: "Authenticating...",
+        success: "Authenticated 👌",
+        error: "Register First",
+      });
       router.push("/");
     } catch (err) {
       console.log(err);
@@ -23,6 +42,19 @@ export default function Login() {
   };
   return (
     <main className="bg-[rgb(42,39,39)] text-white relative z-0 h-screen">
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        limit={4}
+      />
       <Image
         src={darkBgImage}
         className="absolute z-10 h-full w-full object-auto object-top"
@@ -76,6 +108,12 @@ export default function Login() {
             >
               Login
             </button>
+            <Link
+              href={"/signup"}
+              className="bg-[#00000050] text-yellow-400 tracking-wider rounded-[18px] px-5 py-2 cursor-pointer text-sm font-light"
+            >
+              Register?
+            </Link>
             {/* <a
             href="/login"
             className="border-2 border-[#FF2E00] text-[#FF2E00] rounded-[18px] w-[70vw] py-2 cursor-pointer"

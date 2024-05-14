@@ -10,3 +10,8 @@
 .scroll-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari, and Opera */
 }
+
+main#main {
+  background: url("/images/mainBg.png") no-repeat;
+  background-size: contain;
+}

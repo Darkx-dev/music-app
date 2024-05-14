@@ -11,9 +11,14 @@ export const POST = async (req: NextRequest) => {
   const user = await User.findOne({ username });
   // Check if user is already existing in the database
   if (user) {
-    return NextResponse.json({
-      message: "User already exists",
-    });
+    return NextResponse.json(
+      {
+        message: "User already exists",
+      },
+      {
+        status: 401,
+      }
+    );
   }
   // Encrypt password
   const hashedPassword = await bcrypt.hash(password, 10);
