@@ -6,11 +6,10 @@ export const getSong = async (query: string) => {
   let limit = 10;
   const options: any = {
     method: "GET",
-    url: "https://saavn.dev/api/search/songs",
+    url: "https://jiosaavn-api-instance.vercel.app/api/search/songs",
     params: { query, limit },
   };
   const response = await axios.request(options);
   const data = await response.data;
-  console.log(data)
   return data;
 };

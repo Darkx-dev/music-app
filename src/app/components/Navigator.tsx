@@ -5,10 +5,9 @@ export default function Navigator() {
     console.log("svg hovered");
   };
   return (
-    <div className="navigator z-50 pt-5">
+    <div className="navigator z-50">
       <ul
-        className="navigator__routes grid grid-cols-4 place-items-center py-6 px-3 rounded-[40px] rounded-b-none"
-        style={{ boxShadow: "0 -20px 25px -15px #ffffff25" }}
+        className="navigator__routes grid grid-cols-4 place-items-center "
       >
         <div className="home__route">
           <div className="__home__icon">
@@ -22,14 +21,14 @@ export default function Navigator() {
             >
               <path
                 d="M3.19998 9L11.24 2L19.28 9V20C19.28 20.5304 19.0917 21.0391 18.7567 21.4142C18.4216 21.7893 17.9672 22 17.4933 22H4.98665C4.51279 22 4.05835 21.7893 3.72328 21.4142C3.38822 21.0391 3.19998 20.5304 3.19998 20V9Z"
-                stroke="#6156E2"
+                stroke="#8E8E8E"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
               <path
                 d="M8.55998 22V12H13.92V22"
-                stroke="#6156E2"
+                stroke="#8E8E8E"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -39,7 +38,7 @@ export default function Navigator() {
         </div>
         <div className="songs__route">
           
-          <Link href={'/song'}>
+          <Link href={'/song/id'}>
           <div className="songs__icon">
             <svg
               width="23"

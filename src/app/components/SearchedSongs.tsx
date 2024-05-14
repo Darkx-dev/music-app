@@ -6,49 +6,33 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Player from "./Player";
 
-export default function SearchedSongs({ searchQuery, data }: any) {
+
+export default function SearchedSongs({ searchQuery, data, minimizePlayer, togglePlayer, toggle }: any) {
   const results = data.results;
-  const [toggle, setToggle] = useState(false)
-  const [songId, setSongId] = useState("")
-  const testing = () => {
-    console.log(data);
-  };
-  const togglePlayer = (id: string, e: any) => {
-    setSongId(id)
-    setToggle(!toggle);
-    console.log(e.target)
-    console.log(toggle);
-  };
-
-  const minimizePlayer = () => {
-
-  }
   return (
-    <div className="searched__songs__wrapper z-0 relative h-[80vh] overflow-hidden overflow-y-scroll">
-      <h2 onClick={testing}>
+    <div className={`searched__songs__wrapper z-0 relative pb-2 w-full`}>
+      <h2>
         for &quot;{searchQuery}&quot;{"(" + data.total + ")"}
       </h2>
-      <div className="songs__wrapper grid grid-flow-row gap-5 mt-5">
+      <div className="songs__wrapper grid space-y-5 h-min w-full">
         
         {results?.map((song: any) => {
           return (
             // <Link key={song?.id} href={`/song/${song?.id}`}>
-            <div key={song?.id} onClick={(e) => togglePlayer(song?.id,e)}>
+            // <div className="song__wrapper" key={song?.id} onClick={(e) => togglePlayer(song?.id, e)} id="song-wrapper">
             <Song
               key={song?.id}
-              title={song?.name}
-              artist={song?.artists.primary[0].name}
-              cover={song?.image[1].url}
+              togglePlayer = {togglePlayer}
               id={song?.id}
+              title={song?.name}
+              artist={song?.artists.primary[0]?.name}
+              cover={song?.image[1].url}
             />
-            </div>
+            // </div>
             // </Link>
           );
         })}
       </div>
-      {toggle && songId && <motion.div initial={{y: 1000}} animate={{y: 0}} transition={{duration: 0.5}} className="fixed top-0 left-0 bottom-0 right-0 z-[9999] bg-[#0A091E]">
-        <Player id={songId} settoggle={setToggle}/>
-        </motion.div>}
     </div>
   );
 }

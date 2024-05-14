@@ -3,7 +3,7 @@
 import Player from "./Player";
 import { useState } from "react";
 // import { motion } from "framer-motion";
-export default function Song({ title, artist, cover, id }: any) {
+export default function Song({ title, artist, cover, id, togglePlayer }: any) {
   // const [toggle, setToggle] = useState(false);
   const trimString = (str: string, maxLength: number) => {
     if (str.length > maxLength) {
@@ -11,17 +11,28 @@ export default function Song({ title, artist, cover, id }: any) {
     }
     return str;
   };
-
-  // const togglePlayer = () => {
-  //   setToggle(!toggle);
-  // };
+  const setRecents = () => {
+    let bessMusicRecents = localStorage.getItem("bessMusicRecents")?.split("#") || [];
+    setTimeout(() => {
+      if (bessMusicRecents.indexOf(id) == -1) {
+        if (bessMusicRecents.length > 4) {
+          bessMusicRecents.pop();
+        }
+        bessMusicRecents = [id, ...bessMusicRecents];
+        localStorage.setItem("bessMusicRecents", bessMusicRecents.join("#"));
+      }
+    }, 1000);
+  };
 
   return (
     <div
       className="song__card flex flex-nowrap items-center"
-      // onClick={togglePlayer}
+      onClick={(e) => {
+        togglePlayer(id, e);
+        setRecents();
+      }}
     >
-      <div className="song__image w-24 overflow-hidden rounded-2xl">
+      <div className="song__image w-20 overflow-hidden rounded-2xl">
         <img
           src={
             cover
@@ -43,13 +54,6 @@ export default function Song({ title, artist, cover, id }: any) {
           <span className="song__views__cound">114k</span>/ streams
         </p>
       </div>
-      {/* {toggle && (
-        <motion.div className="player__popup fixed z-[50] left-0 top-0 bottom-0 right-0 w-screen bg-[black]">
-          <div className="player__wrapper w-full h-full z-[999999]">
-          <Player id={id} />
-          </div>
-        </motion.div>
-      )} */}
     </div>
   );
 }

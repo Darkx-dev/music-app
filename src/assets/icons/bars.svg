@@ -1,0 +1,94 @@
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     class="svg-snoweb svg-theme-light svg-builder-basic"
+     x="0"
+     y="0"
+     width="100%"
+     height="100%"
+     viewBox="0 0 100 100"
+     preserveAspectRatio="xMidYMid meet"
+>
+<defs>
+    <style>
+        
+            
+            
+            
+        
+
+        .svg-fill-primary {
+            fill: #fff;
+        }
+
+        .svg-fill-secondary {
+            fill: #fff;
+        }
+
+        .svg-fill-tertiary {
+            fill: #fff;
+        }
+
+        .svg-stroke-primary {
+            stroke: #fff;
+        }
+
+        .svg-stroke-secondary {
+            stroke: #fff;
+        }
+
+        .svg-stroke-tertiary {
+            stroke: #fff;
+        }
+    </style>
+</defs>
+    
+
+<clipPath id="clip-path-202405-1400-2325-21419c08-6691-402a-a7f7-079afa74c58a">
+    <!-- <rect x="0" y="95" width="50" height="5"></rect> -->
+</clipPath>
+<g clip-path="url(#clip-path-202405-1400-2325-21419c08-6691-402a-a7f7-079afa74c58a)">
+    <rect 
+            class="svg-fill-tertiary"
+            x="0"
+            y="95"
+            width="100"
+            height="5">
+    </rect>
+    <g transform="translate(0, 50)">
+        <circle 
+                class="svg-fill-secondary svg-builder-circle"
+                cx="50"
+                cy="50"
+                r="50">
+        </circle>
+    </g>
+</g>
+
+    <g transform="translate(20.00, 20.00) scale(0.60, 0.60)">
+        
+    
+    <g id="svg-basic-202405-1400-2325-433eecb4-2a48-4211-af22-1104e8a64307-on-start">
+        
+    <path d="M12.3,21.7H87.7M12.3,50H87.7M12.3,78.3h33"
+      class="svg-stroke-primary"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="8"/>
+
+
+    </g>
+    <g id="svg-basic-202405-1400-2325-433eecb4-2a48-4211-af22-1104e8a64307-on-hover">
+        
+    <path d="M12.5,21.8h75M12.5,50h75m-75,28.2h75"
+      class="svg-stroke-primary"
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="8"/>
+
+
+    </g>
+
+    </g>
+</svg>

@@ -1,23 +1,36 @@
-import React from 'react'
-import Image from 'next/image'
-import recent1 from '@/assets/images/recent1.png'
-import recent2 from '@/assets/images/recent2.png'
-import recent3 from '@/assets/images/recent3.png'
+/* eslint-disable @next/next/no-img-element */
+"use client";
+import { useState, useEffect } from "react";
+import { getSongById } from "@/utils/Songs";
 
-export default function Recent() {
+export default function Recent({ id, togglePlayer }: any) {
+  const [data, setData]: any = useState({
+    images: [],
+    title: "",
+  });
+  const getSongData = async (id: string) => {
+    const song = await getSongById(id);
+    setData({
+      images: song.image,
+      title: song.name,
+    });
+  };
+  useEffect(() => {
+    getSongData(id);
+  }, [id]);
   return (
-    <div className='recent__card'>
-    <div className="recent__image">
-        <Image
-          src={recent1}
-          alt="recent"
-          width={100}
-          height={80}
-        />
+    <div
+      className="recent__card min-w-[30%] snap-start"
+      onClick={(e) => togglePlayer(id, e)}
+    >
+      <div className="recent__image rounded-xl overflow-hidden">
+        {data?.images && (
+          <img src={data?.images[2]?.url} alt="recent" className="w-full" />
+        )}
+      </div>
+      <p className="recent__song_title text-sm text-center font-light mt-2">
+        {data?.title?.split(" ")[0]}
+      </p>
     </div>
-    <p className="recent__song_title text-sm text-center font-light mt-2">
-        The triangle
-    </p>
-    </div>
-  )
+  );
 }

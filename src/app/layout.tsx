@@ -15,8 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="smooth-scroll">
-      <body className={nunito.className  + " h-full bg-[#0A091E]"}>{children}</body>
+    <html lang="en" className="h-full">
+      <body className={nunito.className  + " bg-[#0A091E]"}>{children}</body>
     </html>
   );
 }
