@@ -4,23 +4,20 @@ import "./globals.css";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
-// export const metadata: Metadata = {
-//   title: "Bess Music App",
-//   description: "A Full Stack music app build on top of nextjs with jio saavn unofficial api",
-//   generator: "Next.js",
-//   manifest: "/manifest.json",
-//   keywords: ["nextjs", "nextjs13", "next13", "pwa", "next-pwa"],
-//   themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#fff" }],
-//   authors: [
-//     { name: "Roshan Kumar" }
-//   ],
-//   viewport:
-//     "minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
-//   icons: [
-//     { rel: "apple-touch-icon", url: "/icon-512x512.png" },
-//     { rel: "icon", url: "/icon-512x512.png" },
-//   ],
-// };
+export const metadata: Metadata = {
+  title: "Bess Music App",
+  description: "A Full Stack music app build on top of nextjs with jio saavn unofficial api",
+  generator: "Next.js",
+  manifest: "/manifest.json",
+  keywords: ["nextjs", "nextjs13", "next13", "pwa", "next-pwa"],
+  authors: [
+    { name: "Roshan Kumar" }
+  ],
+  icons: [
+    { rel: "apple-touch-icon", url: "/icon-512x512.png" },
+    { rel: "icon", url: "/icon-512x512.png" },
+  ],
+};
 
 
 export default function RootLayout({
