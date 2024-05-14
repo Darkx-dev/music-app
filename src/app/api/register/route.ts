@@ -30,7 +30,7 @@ export const POST = async (req: NextRequest) => {
   });
   // Generate a token and set in cookies
   const token: string = jwt.sign(
-    { id: newUser._id, username, password, email },
+    { id: newUser._id, username, password: hashedPassword, email },
     `${process.env.JWT_SECRET}`
   );
   response.cookies.set("token", token);

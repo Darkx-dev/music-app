@@ -2,15 +2,18 @@
 import Navbar from "./components/Navbar";
 import Navigator from "./components/Navigator";
 import Recent from "./components/Recent";
-import Song from "./components/Song";
 import SearchedSongs from "./components/SearchedSongs";
 import { getSong } from "@/utils/Search";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import Player from "./components/Player";
 import MinimizedPlayer from "./components/MinimizedPlayer";
+import axios from "axios";
+
 
 export default function Page() {
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+  })
   const [inputValue, setInputValue] = useState(null);
   const [data, setData]: any = useState([null]);
   const [toggle, setToggle] = useState(false);
@@ -47,15 +50,23 @@ export default function Page() {
   const minimizePlayer = () => {
   };
 
+  const getUserData =async () => {
+    const response = await axios.get('/api/getuser');
+    const data = await response.data
+    console.log(data)
+    setUser({username: data.username, email: data.email})
+  }
+
   useEffect(() => {
     let recents = localStorage.getItem("bessMusicRecents")?.split("#") || [];
     setBessMusicRecents([...recents]);
+    getUserData()
   }, []);
 
   return (
     <main className="h-screen text-white pt-5 flex flex-col justify-center">
       <header>
-        <Navbar />
+        <Navbar user={user}/>
         <div className=" flex items-center gap-8 mt-5 px-5 w-full self-start">
           <h1 className="text-[26px] leading-tight text-nowrap">
             {!inputValue && (

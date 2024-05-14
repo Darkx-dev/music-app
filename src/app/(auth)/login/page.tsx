@@ -3,16 +3,23 @@ import Image from "next/image";
 import { useState } from "react";
 import darkBgImage from "@/assets/images/bg.png";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const router = useRouter();
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
   const handleSubmit = async () => {
-    const response = await axios.post("/api/login", user);
-    const data = await response.data;
-    console.log(data);
+    try {
+      const response = await axios.post("/api/login", user);
+      const data = await response.data;
+      console.log(data);
+      router.push("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <main className="bg-[rgb(42,39,39)] text-white relative z-0 h-screen">
@@ -65,8 +72,9 @@ export default function Login() {
             <button
               className="bg-[#FF2E00] tracking-wider rounded-[18px] w-[75vw] py-2 cursor-pointer"
               type="submit"
+              onClick={handleSubmit}
             >
-              Sign up
+              Login
             </button>
             {/* <a
             href="/login"

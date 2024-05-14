@@ -2,7 +2,7 @@
 import bars from '@/assets/icons/bars.svg'
 import Image from 'next/image';
 
-export default function Navbar() {
+export default function Navbar({user}: any) {
   return (
     <div className="user__wrapper w-full flex justify-between items-center px-5">
       <div className="user flex items-center gap-3">
@@ -16,7 +16,7 @@ export default function Navbar() {
           />
         </div>
         <div className="user__info">
-          <h1 className="username text-lg text-white">Guest</h1>
+          <h1 className="username text-lg text-white">{user?.username}</h1>
           <h3 className="user__subscription text-sm text-[#DEDEDE]- text-yellow-400">
             Premium
           </h3>

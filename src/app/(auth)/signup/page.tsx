@@ -3,17 +3,24 @@ import Image from "next/image";
 import { useState } from "react";
 import darkBgImage from "@/assets/images/bg.png";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
+  const router = useRouter();
   const [user, setUser] = useState({
     username: "",
     password: "",
     email: "",
   });
   const handleSubmit = async () => {
-    const response = await axios.post("/api/register", user);
-    const data = await response.data;
-    console.log(data);
+    try {
+      const response = await axios.post("/api/register", user);
+      const data = await response.data;
+      console.log(data);
+      router.push("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <main className="bg-[rgb(42,39,39)] text-white relative z-0 h-screen">
