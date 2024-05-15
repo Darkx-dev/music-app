@@ -74,10 +74,10 @@ export default function Page() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="navbar__wrapper h-fit w-full backdrop-blur">
+        <div className="navbar__wrapper h-fit w-full backdrop-contrast-75 z-[9999999]">
           <Navbar user={user} />
         </div>
-        <div className=" flex items-center justify-between gap-8 mt-5 pl-5 w-full self-start">
+        <div className=" flex items-center relative z-0 justify-between gap-8 mt-5 pl-5 w-full self-start">
           <h1 className="text-[26px] text-[#FF2E00] font-semibold leading-tight text-nowrap">
             {!inputValue && (
               <span className="">
@@ -87,7 +87,7 @@ export default function Page() {
             )}
             {inputValue && <span>Results</span>}
           </h1>
-          <div className="search__wrapper flex flex-nowrap items-center rounded-l-full -z-10 backdrop-blur-sm bg-[#ffffff20] pl-2 py-1">
+          <div className="search__wrapper z-0 flex flex-nowrap items-center rounded-l-full backdrop-blur-sm bg-[#ffffff20] pl-2 py-1">
             <div className="search__icon">
               <svg
                 width="18"
@@ -125,7 +125,7 @@ export default function Page() {
       </motion.header>
       <motion.section
         initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+        animate={{ y: 0, opacity: 1, zIndex: -1 }}
         transition={{ duration: 0.8 }}
         className={`px-5 h-full overflow-auto scroll-hide`}
         id="home"
@@ -133,7 +133,7 @@ export default function Page() {
         {!inputValue && (
           <div className="recents__wrapper mt-10">
             <h2 className="recents__title text-[22px]">Recently Played</h2>
-            <div className="recents__ mt-4 flex h-fit justify-between flex-nowrap overflow-y-hidden overflow-x-auto scroll-hide snap-x gap-3 snap-mandatory">
+            <div className="recents__ mt-4 flex h-fit flex-nowrap overflow-y-hidden overflow-x-auto scroll-hide snap-x gap-3 snap-mandatory">
               {bessMusicRecents.map((recent: any, index: number) => (
                 <Recent
                   key={recent}

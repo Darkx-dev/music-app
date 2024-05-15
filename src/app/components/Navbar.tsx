@@ -39,7 +39,7 @@ export default function Navbar({ user }: any) {
             height={40}
             width={40}
             onClick={handleDropDown}
-            className="absolute z-30 top-2 right-2"
+            className="absolute z-[9999] top-2 right-2"
           />
           <motion.div
             initial={{ x: 250 }}
@@ -51,7 +51,7 @@ export default function Navbar({ user }: any) {
                 : {}
             }
             transition={{duration: 0.3}}
-            className="drop__menu absolute z-10 top-0 h-screen flex items-center justify-center w-[200px] right-0 font-bold tracking-wider bg-[#000000af] backdrop-blur"
+            className="drop__menu absolute z-[999] top-0 h-screen flex items-center justify-center w-[200px] right-0 font-bold tracking-wider bg-[#0000007d] backdrop-blur"
           >
             <div className="drop__menu__main h-[80%] px-4 w-full text-center text-[#FF2E00]">
               <div className="logout rounded-md hover:bg-black py-2">

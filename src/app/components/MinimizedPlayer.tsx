@@ -59,10 +59,9 @@ export default function MinimizedPlayer({ id }: any) {
     clearInterval(intervalRef.current);
     setIsPaused(!isPaused);
     intervalRef.current = null;
-    handleNextSong();
   };
   const devToast = () => {
-    toast.info("🦄 Wow so easy!", {
+    toast.info("Feature in development", {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -93,6 +92,9 @@ export default function MinimizedPlayer({ id }: any) {
           newestOnTop={false}
           closeOnClick
           rtl={false}
+          draggableDirection="x"
+          limit={5}
+          stacked={false}
           pauseOnFocusLoss
           draggable
           pauseOnHover
@@ -128,9 +130,9 @@ export default function MinimizedPlayer({ id }: any) {
         <div className="player__controls flex flex-nowrap justify-evenly gap-4">
           <div
             className="rounded-full back flex items-center"
-            onClick={handlePreviousSong}
+            
           >
-            <div className="back__icon rotate-180">
+            <div className="back__icon rotate-180" onClick={handlePreviousSong}>
               <svg
                 width="25"
                 height="25"
@@ -151,9 +153,9 @@ export default function MinimizedPlayer({ id }: any) {
           </div>
           <div
             className=" rounded-full pause__play flex justify-center items-center"
-            onClick={handlePlayPause}
+            
           >
-            <div className="pause__play__icon grid w-fit">
+            <div className="pause__play__icon grid w-fit" onClick={handlePlayPause}>
               <svg
                 width="30"
                 height="30"
@@ -161,7 +163,7 @@ export default function MinimizedPlayer({ id }: any) {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <g clip-path="url(#clip0_1_719)">
+                <g clipPath="url(#clip0_1_719)">
                   <path
                     d="M25 50C11.1937 50 0 38.8063 0 25C0 11.1937 11.1937 0 25 0C38.8063 0 50 11.1937 50 25C50 38.8063 38.8063 50 25 50ZM18.75 12.5188V37.4813L37.5 25L18.75 12.5188Z"
                     fill="white"
@@ -177,9 +179,9 @@ export default function MinimizedPlayer({ id }: any) {
           </div>
           <div
             className="p-2 rounded-full next flex items-center"
-            onClick={handleNextSong}
+            
           >
-            <div className="next__icon ">
+            <div className="next__icon " onClick={handleNextSong}>
               <svg
                 width="25"
                 height="25"
